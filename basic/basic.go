@@ -3,6 +3,7 @@ package main
 import (
 	"example/basic/flow"
 	"example/basic/functions"
+	"example/basic/types"
 	"fmt"
 )
 
@@ -18,4 +19,14 @@ func main() {
 
 	flow.Defer()
 	flow.StackDefer()
+
+	types.ReadPointer()
+	// myVertex := types.Vertex{1, 2}             // too few values in struct literal of type types.Vertex
+	// myVertex := types.Vertex{1, 2, "myVertex"} // implicit assignment to unexported field privateName in struct literal of type types.Vertex
+	myVertex := types.Vertex{
+		PublicX: 1,
+		PublicY: 2,
+		// privateName: "myVertex", // cannot initialize here
+	}
+	types.ReadStructPointer(&myVertex)
 }
