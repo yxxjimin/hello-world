@@ -1,6 +1,7 @@
 package main
 
 import (
+	"example/basic/containers"
 	"example/basic/flow"
 	"example/basic/functions"
 	"example/basic/types"
@@ -29,4 +30,8 @@ func main() {
 		// privateName: "myVertex", // cannot initialize here
 	}
 	types.ReadStructPointer(&myVertex)
+
+	containers.ArrayAndSlice()
+	containers.SliceLiteral()
+	containers.MakeAndAllocate(3, 3)
 }
