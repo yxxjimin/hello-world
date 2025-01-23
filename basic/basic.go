@@ -6,6 +6,7 @@ import (
 	"example/basic/functions"
 	"example/basic/types"
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -31,7 +32,18 @@ func main() {
 	}
 	types.ReadStructPointer(&myVertex)
 
+	fn := math.Pow
+	fmt.Printf("Original function is %v\n", &fn)
+	types.Compute(fn, 3, 4)
+	types.TestClosure()
+	types.Fibonacci(10)
+
 	containers.ArrayAndSlice()
 	containers.SliceLiteral()
 	containers.MakeAndAllocate(3, 3)
+	containers.ZeroValueMap()
+	containers.MapLiteral()
+	containers.MakeMapAndCheck()
+	fmt.Println(containers.WordCount("I ate a donut. Then I ate another donut."))
+
 }
