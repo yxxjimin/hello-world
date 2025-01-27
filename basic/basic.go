@@ -4,6 +4,7 @@ import (
 	"example/basic/containers"
 	"example/basic/flow"
 	"example/basic/functions"
+	"example/basic/methods"
 	"example/basic/types"
 	"fmt"
 	"math"
@@ -46,4 +47,45 @@ func main() {
 	containers.MakeMapAndCheck()
 	fmt.Println(containers.WordCount("I ate a donut. Then I ate another donut."))
 
+	var num methods.MyFloat = 3
+	fmt.Println(num.Add(4))
+
+	v := methods.Vertex{X: 3, Y: 4}
+	fmt.Printf("Original value at: %p\n", &v)
+	fmt.Println("Original Abs: ", v.Abs())
+	v.ScaleFake(10)
+	fmt.Println("Abs after ScaleFake: ", v.Abs())
+	v.Scale(10) // Automatically interpreted as `(&v).Scale(10)`
+	fmt.Println("Abs after Scale: ", v.Abs())
+
+	p := &v
+	p.Abs()
+	v.Abs() // Equivalent
+	p.Scale(1)
+	v.Scale(1) // Equivalent
+
+	// But not for interface type values
+	var a methods.Abser = num // can hold any value that implements Abser methods
+	fmt.Println(a.Abs())
+
+	a = &v
+	fmt.Println(a.Abs())
+
+	// cannot use v (variable of type methods.Vertex) as methods.Abser value in assignment:
+	// methods.Vertex does not implement methods.Abser (method Abs has pointer receiver)
+	// a = v;
+
+	t := methods.T{S: "Hello!"}
+	var i methods.I = t
+	i.M()
+
+	// `pi` is of type *methods.I, not *methods.T, therefore `pi.M` is undefined
+	// pi := &t
+	// pi.M()
+	pt := &t
+	pt.M() // But this is OK; `pt` is of type *methods.T
+
+	var nilI methods.I
+	fmt.Printf("(%v, %T)\n", nilI, nilI)
+	// nilI.M() // This will panic since there is no type (no concrete method)
 }
